@@ -1,0 +1,536 @@
+/* =========================================================
+   Site pessoal – Lucas Motta Poncio
+   Abordagem mobile-first: tudo fora das media queries vale
+   para telas pequenas (~375 px). Telas maiores são tratadas
+   no final do arquivo, com media queries.
+   ========================================================= */
+
+
+/* ---------- 1. Variáveis (cores, medidas) ---------- */
+:root {
+    --azul: #1b3fa8;
+    --azul-escuro: #132c78;
+    --azul-claro: #dbe4ff;
+    --amarelo: #ffc857;
+    --tinta: #172033;
+    --texto-suave: #4a5568;
+    --papel: #f4f6fb;
+    --branco: #ffffff;
+    --linha: #c4cde0;
+
+    --largura-max: 62rem;   /* largura máxima do conteúdo */
+    --margem: 1.25rem;      /* espaço lateral da página */
+}
+
+
+/* ---------- 2. Base ---------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;   /* rolagem suave nos links internos */
+    }
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--tinta);
+    background-color: var(--papel);
+    overflow-wrap: break-word;
+}
+
+/* Imagens nunca ultrapassam a largura disponível */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+h1,
+h2,
+h3 {
+    margin: 0;
+    line-height: 1.2;
+}
+
+h3 {
+    margin-bottom: 0.35rem;
+    font-size: 1.1rem;
+}
+
+p,
+ul {
+    margin: 0 0 1rem;
+}
+
+/* Os <hr> continuam no HTML (estrutura), mas as seções
+   já são separadas por uma linha azul no topo de cada uma. */
+hr {
+    display: none;
+}
+
+
+/* ---------- 3. Links ---------- */
+a {
+    color: var(--azul);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+}
+
+a:hover {
+    color: var(--tinta);
+    background-color: var(--amarelo);
+    text-decoration-thickness: 3px;
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--azul);
+    outline-offset: 3px;
+}
+
+
+/* ---------- 4. Cabeçalho ---------- */
+header,
+footer {
+    /* alinha o texto do cabeçalho/rodapé com o conteúdo do <main> */
+    padding-inline: max(var(--margem), calc((100% - var(--largura-max)) / 2 + var(--margem)));
+}
+
+header {
+    padding-block: 2rem 1.5rem;
+    color: var(--branco);
+    background-color: var(--azul);
+    /* grade fina, como papel de desenho técnico */
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+    background-size: 1.5rem 1.5rem;
+}
+
+header h1 {
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+    letter-spacing: -0.01em;
+}
+
+/* subtítulo (primeiro parágrafo do cabeçalho) */
+header > p:first-of-type {
+    margin-bottom: 0;
+    font-size: 1.05rem;
+    color: var(--azul-claro);
+}
+
+/* foto: o CSS controla o tamanho (sobrescreve width/height do HTML) */
+header img {
+    display: block;
+    width: 9rem;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    margin: 1.5rem 0;
+    border: 3px solid var(--branco);
+    outline: 1px solid rgba(255, 255, 255, 0.55);
+    outline-offset: 5px;
+}
+
+/* frase de apresentação (segundo parágrafo do cabeçalho) */
+header > p:nth-of-type(2) {
+    max-width: 38rem;
+    margin-bottom: 0;
+}
+
+
+/* ---------- 5. Navegação ---------- */
+nav {
+    margin-top: 1.5rem;
+}
+
+/* o título "Navegação" fica só para leitores de tela */
+nav h2 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav a {
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--branco);
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+nav a:hover {
+    color: var(--azul);
+    background-color: var(--branco);
+}
+
+nav a:focus-visible {
+    outline-color: var(--amarelo);
+}
+
+
+/* ---------- 6. Conteúdo principal ---------- */
+main {
+    max-width: var(--largura-max);
+    margin-inline: auto;
+    padding: 0 var(--margem) 1rem;
+}
+
+main > section {
+    margin-top: 1.5rem;
+    padding: 1rem 0 1.5rem;
+    border-top: 3px solid var(--azul);
+    scroll-margin-top: 0.5rem;
+}
+
+main h2 {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+main ul {
+    padding-left: 1.25rem;
+}
+
+main li::marker {
+    color: var(--azul);
+}
+
+main li + li {
+    margin-top: 0.25rem;
+}
+
+/* link "Voltar ao topo" no fim de cada seção */
+main section > p:last-child {
+    margin: 1.5rem 0 0;
+    font-size: 0.9rem;
+}
+
+
+/* ---------- 7. Formação acadêmica ---------- */
+#formacao article {
+    margin-bottom: 1.25rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--azul);
+}
+
+#formacao article h3 {
+    margin-bottom: 0.25rem;
+}
+
+#formacao article p {
+    margin: 0;
+    color: var(--texto-suave);
+}
+
+
+/* ---------- 8. Habilidades (etiquetas) ---------- */
+#habilidades h3 {
+    margin: 1.25rem 0 0.6rem;
+    color: var(--texto-suave);
+}
+
+#habilidades h2 + h3 {
+    margin-top: 0;
+}
+
+#habilidades ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#habilidades li {
+    margin: 0;
+    padding: 0.3rem 0.8rem;
+    font-weight: 600;
+    color: var(--azul);
+    background-color: var(--branco);
+    border: 1px solid var(--azul);
+    border-radius: 0.25rem;
+}
+
+
+/* ---------- 9. Links e perfis ---------- */
+#links ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#links li {
+    margin-bottom: 0.5rem;
+}
+
+#links a {
+    font-weight: 600;
+}
+
+
+/* ---------- 10. Formulário de contato ---------- */
+form {
+    margin-top: 1.25rem;
+}
+
+fieldset {
+    min-width: 0;            /* evita estourar a largura em telas pequenas */
+    margin: 0;
+    padding: 1rem 1rem 0.25rem;
+    background-color: var(--branco);
+    border: 1px solid var(--linha);
+    border-radius: 0.25rem;
+}
+
+legend {
+    padding: 0 0.5rem;
+    font-weight: 700;
+    color: var(--azul);
+}
+
+label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+}
+
+/* o <br> do HTML não é mais necessário: o label já ocupa a linha toda */
+form br {
+    display: none;
+}
+
+input,
+select,
+textarea {
+    display: block;
+    width: 100%;             /* sobrescreve cols="40" e evita largura fixa */
+    padding: 0.7rem 0.8rem;
+    font: inherit;
+    color: var(--tinta);
+    background-color: var(--branco);
+    border: 1px solid #8793ab;
+    border-radius: 0.25rem;
+}
+
+textarea {
+    min-height: 8rem;
+    resize: vertical;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: var(--azul);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--azul);
+    outline: 3px solid rgba(27, 63, 168, 0.3);
+}
+
+/* último parágrafo do fieldset = botões lado a lado */
+fieldset > p:last-of-type {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+button {
+    min-height: 2.75rem;
+    padding: 0.75rem 1.25rem;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid var(--azul);
+    border-radius: 0.25rem;
+}
+
+button[type="submit"] {
+    color: var(--branco);
+    background-color: var(--azul);
+}
+
+button[type="submit"]:hover {
+    background-color: var(--azul-escuro);
+    border-color: var(--azul-escuro);
+}
+
+button[type="reset"] {
+    color: var(--azul);
+    background-color: transparent;
+}
+
+button[type="reset"]:hover {
+    background-color: var(--azul-claro);
+}
+
+
+/* ---------- 11. Rodapé ---------- */
+footer {
+    padding-block: 1.5rem;
+    font-size: 0.9rem;
+    text-align: center;
+    color: var(--azul-claro);
+    background-color: var(--tinta);
+}
+
+footer p {
+    margin: 0;
+}
+
+
+/* =========================================================
+   TABLET – a partir de 768 px
+   ========================================================= */
+@media (min-width: 48em) {
+
+    :root {
+        --margem: 2rem;
+    }
+
+    body {
+        font-size: 1.0625rem;
+    }
+
+    /* Cabeçalho em grade: texto à esquerda, foto à direita */
+    header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 12rem;
+        grid-template-rows: auto auto 1fr auto;
+        grid-template-areas:
+            "nome  foto"
+            "cargo foto"
+            "intro foto"
+            "nav   nav";
+        column-gap: 2rem;
+        padding-block: 3rem 2rem;
+    }
+
+    header h1 {
+        grid-area: nome;
+        font-size: 2.75rem;
+    }
+
+    header > p:first-of-type {
+        grid-area: cargo;
+    }
+
+    header img {
+        grid-area: foto;
+        justify-self: end;
+        width: 12rem;
+        margin: 0;
+    }
+
+    header > p:nth-of-type(2) {
+        grid-area: intro;
+    }
+
+    nav {
+        grid-area: nav;
+        margin-top: 2rem;
+    }
+
+    /* Seções: título à esquerda, conteúdo à direita */
+    main > section {
+        display: grid;
+        grid-template-columns: 9rem minmax(0, 1fr);
+        column-gap: 2rem;
+        padding: 1.25rem 0 2rem;
+    }
+
+    main > section > h2 {
+        grid-column: 1;
+        grid-row: 1;
+        margin-bottom: 0;
+        font-size: 1.2rem;
+    }
+
+    main > section > :not(h2) {
+        grid-column: 2;
+    }
+}
+
+
+/* =========================================================
+   DESKTOP – a partir de 1200 px
+   ========================================================= */
+@media (min-width: 75em) {
+
+    body {
+        font-size: 1.125rem;
+    }
+
+    header {
+        grid-template-columns: minmax(0, 1fr) 15rem;
+        column-gap: 3rem;
+        padding-block: 4rem 2.5rem;
+    }
+
+    header h1 {
+        font-size: 3.5rem;
+    }
+
+    header > p:first-of-type {
+        font-size: 1.25rem;
+    }
+
+    header img {
+        width: 15rem;
+    }
+
+    main > section {
+        grid-template-columns: 12rem minmax(0, 1fr);
+        column-gap: 3rem;
+    }
+
+    main > section > h2 {
+        font-size: 1.35rem;
+    }
+
+    /* Formação: os dois cursos lado a lado */
+    #formacao {
+        grid-template-columns: 12rem repeat(2, minmax(0, 1fr));
+    }
+
+    #formacao > article:nth-of-type(2) {
+        grid-column: 3;
+    }
+
+    #formacao > p:last-child {
+        grid-column: 2 / -1;
+    }
+}
